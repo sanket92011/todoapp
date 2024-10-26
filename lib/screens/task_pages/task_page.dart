@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:todoapp/screens/globals.dart';
+import 'package:todoapp/screens/auth/login_screen.dart';
 import 'package:todoapp/screens/task_pages/add_task.dart';
 import 'package:todoapp/widgets/task_card.dart';
 
@@ -14,10 +14,8 @@ class TaskPage extends StatefulWidget {
 }
 
 class _TaskPageState extends State<TaskPage> {
-  @override
   final userUid = FirebaseAuth.instance.currentUser!.uid;
   var id;
-  var name;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +30,11 @@ class _TaskPageState extends State<TaskPage> {
           IconButton(
             onPressed: () {
               FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginScreen(),
+                  ));
             },
             icon: const Icon(Icons.logout),
           ),
@@ -75,8 +78,6 @@ class _TaskPageState extends State<TaskPage> {
                           final taskDescription = snapshot.data!.docs[index]
                                   .data()['description'] ??
                               "";
-                          name = snapshot.data!.docs[index].data()['userName'];
-                          print(name);
                           final createdOn =
                               snapshot.data!.docs[index].data()['time'] ?? "";
                           final month =

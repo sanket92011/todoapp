@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.data != null) {
             return const TaskPage();
           }
-          return LoginScreen();
+          return const LoginScreen();
         },
       ),
     );
